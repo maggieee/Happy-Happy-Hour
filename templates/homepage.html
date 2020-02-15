@@ -22,7 +22,7 @@
 <h2>Home</h2>
 
 <form id="search" action="/map" >
-  Search stocks by location 
+  Search stocks by location
   <input  type="text" name="location" value="e.x. 47 blossom ct">
   <button type="submit">search</button>
 </form>
@@ -35,22 +35,13 @@
   TOMTOM challenge<br>
   Copyright@2020<br>
   <a href="https://github.com/nancydyc">
-  Github</a> | 
+  Github</a> |
   <a href="https://www.linkedin.com/in/yichen-dai-20557a195/">
   LinkedIn</a>
 </footer>
 
 <script src='https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.45.0/maps/maps-web.min.js'>
 </script>
-<script>
-    var map = tt.map({
-        key: 'tz1ptALiZKB6nDN1PZBfjxiGi39e1i8z',
-        container: 'map',
-        style: 'tomtom://vector/1/basic-main',
-    });
-    map.addControl(new tt.FullscreenControl());
-    map.addControl(new tt.NavigationControl());
-</script>
+<script src='/static/tomtom.js'></script>
 </body>
 </html>
-
