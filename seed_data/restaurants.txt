@@ -1,0 +1,4 @@
+B Star|127 Clement Street|San Francisco|CA|94118|bstar@bstar.com|bstar
+Zero Zero|826 Folsom Street|San Francisco|CA|94107|zerozero@zerozero.com|zerozero
+Ragazza|311 Divisadero Street|San Francisco|CA|94117|ragazza@ragazza.com|ragazza
+The Taco Shop at Underdogs|1824 Irving Street|San Francisco|CA|94122|tacoshop@tacoshop.com|tacoshop
