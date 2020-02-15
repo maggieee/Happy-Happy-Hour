@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css" />
+    <title>Happy Happy Hour</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous">
+    </script>
+</head>
+<body>
+    <nav>
+        <div>
+            {% if not session.get("restaurant_id") %}
+                <p>
+                    <a href="/restaurant">Restaurant Login/Sign up</a></p>
+                </p>
+            {% endif %}
+            {% if session.get("restaurant_id") %}
+                <p>
+                    <a href="/restaurant-dashboard/{{ session.get('restaurant_id') }}">
+                    Account</a>
+                <p><a href="/logout">Sign out</a></p>
+            {% endif %}
+        </div>
+    </nav>
+    <div id="flash-messages">
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    {% for message in messages %}
+                      <p>{{ message }}</p>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+            </div>
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+    {% block script %}{% endblock %}
+</body>
+</html>
