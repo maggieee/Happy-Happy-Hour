@@ -17,6 +17,7 @@ app.secret_key = "b_xd3xf9095~xa68x90E^O1xd3R"
 app.jinja_env.undefined = StrictUndefined
 
 
+
 @app.route("/", methods=["GET"])
 def index():
     """Show homepage."""
@@ -34,6 +35,7 @@ def show_login_form():
         return redirect(f"/restaurant-dashboard/{restaurant_id}")
 
     return render_template("restaurant-login.html")
+
 
 
 @app.route("/restaurant", methods=["POST"])

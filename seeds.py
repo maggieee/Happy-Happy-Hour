@@ -29,6 +29,7 @@ def load_restaurants():
         
         restaurant.set_password(password)
 
+
         # We need to add to the session or it won't ever be stored
         db.session.add(restaurant)
 

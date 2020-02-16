@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+<head class='use-all-space'>
+  <title>HAPPY HAPPY HOUR</title>
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge' />
+  <meta charset='UTF-8'>
+  <title>Maps SDK for Web - Vector map</title>
+  <meta name='viewport'
+        content='width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no'/>
+  <link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.45.0/maps/maps.css'>
+  <link rel="stylesheet" type="text/css" href="/static/map.css">
+ <script src='https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.45.0/maps/maps-web.min.js'>
+</script>
+</head>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-3">
+      <div id="flash-messages">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <p>{{ message }}</p>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+    </div>
+      <h6 id="tagline">
+        Search below for food and drink deals that are happy for you, the restaurant, and the planet. Oh wait, that's a happy happy <i>happy</i> hour.
+      </h6>
+      <form id="search" action="/map">
+        <div class="form-inline address-search">
+          <label for="location">Your address:</label>
+          <input  type="text" class="form-control-sm" name="location">
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+      </form>
+      <form id="filter" action="/map">
+        <div class="form-group">
+          <label for="name">Restaurant Name:</label>
+          <input type="text" name="name" class="form-control form-filter">
+          <label for="start-time">Start Time:</label>
+          <input type="datetime-local" class="form-control form-filter" name="start-time">
+          <label for="end-time">End Time: </label>
+          <input type="datetime-local" class="form-control form-filter" name="end-time">
+          <label for="price">Deal Price: $</label>
+          <input type="number" class="form-control form-filter" name="price" step="any" min=0>
+          <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-9">
+      <div id='map' class='map'></div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="/static/js/map.js"></script>
+{% endblock %}

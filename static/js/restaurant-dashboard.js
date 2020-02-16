@@ -4,16 +4,7 @@
 $(".edit-offer-btn").on("click", (evt) => {
     const offerId = evt.target.dataset.offerId;
     $(`#offer-${offerId}`).hide();
-    $(`#editable-offer-${offerId}`).show();
-});
-
-// When a user clicks the cancel button, editable form is hidden
-// and the offer is shown without any changes.
-$(".cancel-edit-btn").on("click", (evt) => {
-    evt.preventDefault();
-    const offerId = evt.target.dataset.offerId;
-    $(`#offer-${offerId}`).show();
-    $(`#editable-offer-${offerId}`).hide();
+    $(`#editable-offer-${offerId}`).toggle();
 });
 
 // When a user clicks the delete button, they're asked if they

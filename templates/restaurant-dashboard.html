@@ -1,76 +1,74 @@
 {% extends "base.html" %}
 {% block content %}
-    <div>
-        <h1>
-            Welcome {{ restaurant.name }}
-        </h1>
-    </div>
-    <div>
-        <h2>Add a New Offer</h2>
-        <form action="/restaurant-dashboard/{{ restaurant.id }}/add-offer", method="POST">
-            <label for="item">Name of the item:
-                <input type="text" required name="item">
-            </label>
-            <label for="quantity">Quantity:
-                <input type="number" required name="quantity">
-            </label>
-            <label for="price">Item price:
-                <input type="number" required name="price" min=0 step="any">
-            </label>
-            <label for="start-time">Start time:
-                <input type="datetime-local" required name="start-time">
-            </label>
-            <label for="end-time">End time:
-                <input type="datetime-local" required name="end-time">
-            </label>
-            <input type="submit" value="Add Offer">
-        </form>
-    </div>
-    <div>
-        <h2>Your Current Offers</h2>
-        {% if not offers %}
-            <p>You don't have any offers yet.</p>
-        {% endif %}
-        {% if offers %}
-            {% for offer in offers %}
-                <div>
-                    <div id="offer-{{ offer.id }}">
-                        <h4>{{ offer.item }}</h4>
-                        <ul>
-                            <li>Quantity: {{ offer.quantity }}</li>
-                            <li>Price: {{ "$%.2f"|format(offer.price) }}</li>
-                            <li>Start time: {{ offer.start_time|datetime }}</li>
-                            <li>End time: {{ offer.end_time|datetime }}</li>
-                        </ul>
-                        <button class="edit-offer-btn" data-offer-id="{{ offer.id }}">Edit</button>
-                        <button class="delete-offer-btn" data-offer-id="{{ offer.id }}">Delete</button>
-                    </div>
-                    <div id="editable-offer-{{ offer.id }}" hidden>
-                        <form action="/restaurant-dashboard/{{ restaurant.id }}/{{ offer.id }}/edit", method="POST">
-                            <label for="item">Name of the item:
-                                <input type="text" required name="item" value="{{ offer.item }}">
-                            </label>
-                            <label for="quantity">Quantity:
-                                <input type="number" required name="quantity" {% if offer.quantity %} value="{{ offer.quantity }}" {% endif %}>
-                            </label>
-                            <label for="price">Item price:
-                                <input type="number" required name="price" min="0" step="any" {% if offer.price %} value="{{ offer.price }}" {% endif %}>
-                            </label>
-                            <label for="start-time">Start time:
-                                <input type="datetime" required name="start-time" value={{ offer.start_time|htmldatetime }}>
-                            </label>
-                            <label for="end-time">End time:
-                                <input type="datetime" required name="end-time" value={{ offer.end_time|htmldatetime }}>
-                            </label>
-                            <button class="cancel-edit-btn" data-post-id="{{ offer.id }}">Cancel</button>
-                            <p><button type="submit">Save Changes</button></p>
-                        </form>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-6">
+                        <div id="flash-messages">
+                            {% with messages = get_flashed_messages() %}
+                              {% if messages %}
+                                {% for message in messages %}
+                                  <p>{{ message }}</p>
+                                {% endfor %}
+                              {% endif %}
+                            {% endwith %}
+                        </div>
+                        <h1 id="welcome">
+                            Welcome {{ restaurant.name }}
+                        </h1>
+                        <h2 id="current">Your Current Offers</h2>
+                        {% if not offers %}
+                            <p>You don't have any offers yet.</p>
+                        {% endif %}
+                        {% if offers %}
+                            {% for offer in offers %}
+                                <div id="offer-{{ offer.id }}">
+                                    <h4>{{ offer.item }}</h4>
+                                    <ul>
+                                        <li>Quantity: {{ offer.quantity }}</li>
+                                        <li>Price: {{ "$%.2f"|format(offer.price) }}</li>
+                                        <li>Start time: {{ offer.start_time|datetime }}</li>
+                                        <li>End time: {{ offer.end_time|datetime }}</li>
+                                    </ul>
+                                    <button type="submit" class="btn btn-primary delete-offer-btn" data-offer-id="{{ offer.id }}">Delete</button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
-            {% endfor %}
-        {% endif %}
+            </div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <h2 id="add-new-offer">Add a New Offer</h2>
+            <form id="add-offer-form" action="/restaurant-dashboard/{{ restaurant.id }}/add-offer", method="POST">
+                <div class="form-group">
+                    <label for="item">Name of the item:</label>
+                    <input type="text" required class="form-control" name="item">
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" required class="form-control" name="quantity">
+                </div>
+                <div class="form-group">
+                    <label for="price">Item price:</label>
+                    <input type="number" required class="form-control" name="price" min=0 step="any">
+                </div>
+                <div class="form-group">
+                    <label for="start-time">Start time:</label>
+                    <input type="datetime-local" required class="form-control" name="start-time">
+                </div>
+                <div class="form-group">
+                    <label for="end-time">End time:</label>
+                    <input type="datetime-local" required class="form-control" name="end-time">
+                </div>
+                <button type="submit" class="btn btn-primary">Add Offer</button>
+            </form>
+        </div>
     </div>
+</div>
 {% endblock %}
 {% block script %}
     <script src="/static/js/restaurant-dashboard.js"></script>
 {% endblock %}
+
