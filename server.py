@@ -6,7 +6,7 @@ from sqlalchemy import desc
 from datetime import datetime
 import os
 
-from flask_debugtoolbar import DebugToolbarExtension
+# from flask_debugtoolbar import DebugToolbarExtension
 
 from model import connect_to_db, db, Restaurant, Offer
 
@@ -254,10 +254,10 @@ app.jinja_env.filters['htmldatetime'] = htmldateformat
 
 
 if __name__ == "__main__":
-    app.debug = True
+    app.debug = False
     app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
     connect_to_db(app)
-    DebugToolbarExtension(app)
+    # DebugToolbarExtension(app)
 
     app.run(host="0.0.0.0")
