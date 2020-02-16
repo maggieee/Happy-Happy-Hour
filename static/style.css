@@ -1,0 +1,43 @@
+.address-search {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#tagline {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.form-filter {
+    margin-bottom: 20px;
+}
+
+#welcome {
+    margin-top: 60px;
+}
+
+#current {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+#add-new-offer {
+    margin-top: 40px;
+}
+
+#add-offer-form {
+    margin-bottom: 50px;
+}
+
+#sign-in {
+    margin-top: 60px;
+}
+
+#sign-in {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.bg-light {
+    background-color: #e3f2fd !important;
+}

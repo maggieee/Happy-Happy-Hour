@@ -15,7 +15,7 @@
                         <h1 id="welcome">
                             Welcome {{ restaurant.name }}
                         </h1>
-                        <h2 id="current">Your Current Offers</h2>
+                        <h2 id="current">Your Current Offer</h2>
                         {% if not offers %}
                             <p>You don't have any offers yet.</p>
                         {% endif %}
@@ -23,12 +23,6 @@
                             {% for offer in offers %}
                                 <div id="offer-{{ offer.id }}">
                                     <h4>{{ offer.item }}</h4>
-                                    <ul>
-                                        <li>Quantity: {{ offer.quantity }}</li>
-                                        <li>Price: {{ "$%.2f"|format(offer.price) }}</li>
-                                        <li>Start time: {{ offer.start_time|datetime }}</li>
-                                        <li>End time: {{ offer.end_time|datetime }}</li>
-                                    </ul>
                                     <button type="submit" class="btn btn-primary delete-offer-btn" data-offer-id="{{ offer.id }}">Delete</button>
                                 </div>
                             {% endfor %}
@@ -36,37 +30,22 @@
                     </div>
                 </div>
             </div>
-
+{% if not offers %}
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-6">
             <h2 id="add-new-offer">Add a New Offer</h2>
             <form id="add-offer-form" action="/restaurant-dashboard/{{ restaurant.id }}/add-offer", method="POST">
                 <div class="form-group">
-                    <label for="item">Name of the item:</label>
-                    <input type="text" required class="form-control" name="item">
-                </div>
-                <div class="form-group">
-                    <label for="quantity">Quantity:</label>
-                    <input type="number" required class="form-control" name="quantity">
-                </div>
-                <div class="form-group">
-                    <label for="price">Item price:</label>
-                    <input type="number" required class="form-control" name="price" min=0 step="any">
-                </div>
-                <div class="form-group">
-                    <label for="start-time">Start time:</label>
-                    <input type="datetime-local" required class="form-control" name="start-time">
-                </div>
-                <div class="form-group">
-                    <label for="end-time">End time:</label>
-                    <input type="datetime-local" required class="form-control" name="end-time">
+                    <label for="item">Describe item, quantity, price, dates, and times:</label>
+                    <input type="textarea" required class="form-control" name="item">
                 </div>
                 <button type="submit" class="btn btn-primary">Add Offer</button>
             </form>
         </div>
     </div>
 </div>
+{% endif %}
 {% endblock %}
 {% block script %}
     <script src="/static/js/restaurant-dashboard.js"></script>

@@ -1,6 +1,6 @@
 from jinja2 import StrictUndefined
 
-from flask import Flask, render_template, request, flash, redirect, session
+from flask import Flask, render_template, request, flash, redirect, session, jsonify
 from sqlalchemy import desc
 
 from datetime import datetime
@@ -9,6 +9,8 @@ import os
 from flask_debugtoolbar import DebugToolbarExtension
 
 from model import connect_to_db, db, Restaurant, Offer
+
+import requests
 
 
 app = Flask(__name__)
@@ -23,6 +25,61 @@ def index():
     """Show homepage."""
 
     return render_template("homepage.html")
+
+@app.route("/map")
+def search_location():
+    """Search for your location on the map."""
+    
+    # Get user input from the search form
+    query = request.args.get("location")
+
+    req_tom = requests.get(f"https://api.tomtom.com/search/2/search/{query}.json?key=UEMHJeLAHMvvGsWGtxGl2NB9hNZXtpsm")
+    search_results = req_tom.json()
+    first_result = search_results.get("results")[1]
+    lat_lon = first_result.get("position")
+    
+    return lat_lon
+
+
+@app.route("/restaurant-object")
+def get_restaurants_as_json():
+    """Query database for restaurant info and send as JSON response."""
+
+    # Query database and create dictionary
+    restaurants = Restaurant.query.options(db.joinedload('offers')).all()
+    rests = {}
+    for rest in restaurants:
+        rests[rest.name] = {'street_address': rest.street_address,
+                            'city': rest.city,
+                            'name': rest.name,
+                            'state': rest.state,
+                            'zipcode': rest.zipcode,
+                            'email': rest.email}
+
+        if rest.offers:
+            offers = rest.offers
+            first_offer = offers[0]
+            rests[rest.name]['offer'] = first_offer.item
+
+        if not rest.offers:
+            rests[rest.name]['offer'] = " No current offers"
+
+    print(rests)
+
+    # Turn address into lat/lon using TomTom API
+    for rest in rests.values():
+        rest["address"] = f"{rest['street_address']} {rest['city']}, {rest['state']} {rest['zipcode']}"
+        query = rest["address"]
+        req_tom = requests.get(f"https://api.tomtom.com/search/2/search/{query}.json?key=UEMHJeLAHMvvGsWGtxGl2NB9hNZXtpsm")
+        search_results = req_tom.json()
+        first_result = search_results.get("results")[1]
+        lat_lon = first_result.get("position")
+        # Update dictionary with lat/lon
+        rest["coordinate"] = [lat_lon["lon"], lat_lon["lat"]]
+
+    return jsonify(rests)
+
+    # Return jsonify(dictionary)
 
 
 @app.route("/restaurant", methods=["GET"])
@@ -140,45 +197,11 @@ def add_offer(restaurant_id):
     restaurant = Restaurant.query.get(restaurant_id)
 
     item = request.form.get("item")
-    quantity = request.form.get("quantity")
-    price = request.form.get("price")
-    start_time = request.form.get("start-time")
-    end_time = request.form.get("end-time")
-
 
     new_offer = Offer(restaurant_id=restaurant_id,
-                      item=item,
-                      quantity=quantity,
-                      price=price,
-                      start_time=start_time,
-                      end_time=end_time)
+                      item=item)
 
     db.session.add(new_offer)
-    db.session.commit()
-
-    return redirect(f"/restaurant-dashboard/{restaurant_id}")
-
-
-@app.route("/restaurant-dashboard/<int:restaurant_id>/<int:offer_id>/edit", methods=["POST"])
-def edit_offer(restaurant_id, offer_id):
-    """Edit an offer."""
-
-    restaurant = Restaurant.query.get(restaurant_id)
-    offer = Offer.query.get(offer_id)
-
-    item = request.form.get("item")
-    quantity = request.form.get("quantity")
-    price = request.form.get("price")
-    start_time = request.form.get("start-time")
-    end_time = request.form.get("end-time")
-
-    offer.item = item
-    offer.quantity = quantity
-    offer.price = price
-    offer.start_time = start_time
-    offer.end_time = end_time
-
-    db.session.add(offer)
     db.session.commit()
 
     return redirect(f"/restaurant-dashboard/{restaurant_id}")

@@ -1,8 +1,8 @@
-2|2020-02-21 17:00:00|2020-02-15 22:00:00|Slice of pizza|400|2.50
-2|2020-02-28 17:00:00|2020-02-28 22:00:00|Fried mac and cheese|100|4.00
-4|2020-02-22 17:00:00|2020-02-22 22:00:00|2 tacos|200|5.00
-4|2020-02-29 17:00:00|2020-02-29 22:00:00|Guacamole and chips|300|4.00
-1|2020-02-20 17:00:00|2020-02-20 22:00:00|Tea leaf salad|250|5.00
-1|2020-02-27 17:00:00|2020-02-27 22:00:00|Sticky fingers pork riblets|200|6.00
-3|2020-02-19 17:00:00|2020-02-19 22:00:00|Lamb and pork meatballs|250|7.00
-3|2020-02-26 17:00:00|2020-02-26 22:00:00|Baked rigatoni|400|5.00
+2|Slice of pizza
+2|Fried mac and cheese
+4|2 tacos
+4|Guacamole and chips
+1|Tea leaf salad
+1|Sticky fingers pork riblets
+3|Lamb and pork meatballs
+3|Baked rigatoni

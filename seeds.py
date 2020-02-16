@@ -37,37 +37,33 @@ def load_restaurants():
     db.session.commit()
 
 
-def load_offers():
-    """Load posts from offers.txt into database."""
+# def load_offers():
+#     """Load posts from offers.txt into database."""
 
-    print("Offers")
+#     print("Offers")
 
-    # Read offers.txt file and insert data
-    for row in open("seed_data/offers.txt"):
-        row = row.rstrip()
-        restaurant_id, start_time, end_time, item, quantity, price = row.split("|")
+#     # Read offers.txt file and insert data
+#     for row in open("seed_data/offers.txt"):
+#         row = row.rstrip()
+#         restaurant_id, item = row.split("|")
 
-        offer = Offer(restaurant_id=restaurant_id,
-                      start_time=start_time,
-                      end_time=end_time,
-                      item=item,
-                      quantity=quantity,
-                      price=price)
+#         offer = Offer(restaurant_id=restaurant_id,
+#                       item=item)
 
-        # We need to add to the session or it won't ever be stored
-        db.session.add(offer)
+#         # We need to add to the session or it won't ever be stored
+#         db.session.add(offer)
 
-    # Once we're done, we should commit our work
-    db.session.commit()
+#     # Once we're done, we should commit our work
+#     db.session.commit()
 
 
 if __name__ == "__main__":
     connect_to_db(app)
 
-    kaboom()
+    # kaboom()
     # In case tables haven't been created, create them
     db.create_all()
 
     # Import different types of data
     load_restaurants()
-    load_offers()
+    # load_offers()

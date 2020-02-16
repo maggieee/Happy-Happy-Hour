@@ -40,11 +40,7 @@ class Offer(db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     restaurant_id = db.Column(db.Integer, 
                            db.ForeignKey("restaurants.id"))
-    start_time = db.Column(db.DateTime, nullable=False)
-    end_time = db.Column(db.DateTime, nullable=False)
-    item = db.Column(db.String(80), nullable=False)
-    quantity = db.Column(db.Integer, nullable=False)
-    price = db.Column(db.Float, nullable=False)
+    item = db.Column(db.Text, nullable=False)
 
     def __repr__(self):
 
@@ -55,7 +51,7 @@ class Offer(db.Model):
 def connect_to_db(app):
     """Connect Flask app to database."""
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql:///nourish'
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql:///happyhappy'
     app.config["SQLALCHEMY_ECHO"] = False
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
